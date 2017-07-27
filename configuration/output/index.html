@@ -12,7 +12,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
     
-      <link href="/2f2ed4caff423507eb89.css" rel="stylesheet">
+      <link href="/bc2b966423ba2d78e609.css" rel="stylesheet">
     
 
     <script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
@@ -379,7 +379,33 @@
 <p>Note that <code>output.libraryTarget</code> defaults to <code>var</code>. This means if only <code>output.library</code> is used it is exported as variable declaration (when used as script tag it&apos;s available in the global scope after execution).</p>
 <blockquote class="tip"><div class="tip-content"> Read the <a href="/guides/author-libraries">authoring libraries guide</a> guide for more information on <code>output.library</code> as well as <code>output.libraryTarget</code>. </div></blockquote><h2 class="header"><a class="anchor" href="#output-libraryexport" id="output-libraryexport"></a><span class="text"><code>output.libraryExport</code></span><a class="icon-link" href="#output-libraryexport"></a></h2>
 <p><code>string</code> or <code>string[]</code> (since webpack 3.0.0)</p>
-<p>Allows to select an export for the library.</p>
+<blockquote>
+<p>Default: <code>_entry_return_</code></p>
+</blockquote>
+<p>Configure which module or modules will be exposed via the <code>libraryTarget</code>.</p>
+<p>The default value <code>_entry_return_</code> is the namespace or default module returned by your entry file.</p>
+<p>The examples below demonstrate the effect of this config when using <code>libraryTarget: &quot;var&quot;</code>, but any target may be used.</p>
+<p>The following configurations are supported:</p>
+<p><code>libraryExport: &quot;default&quot;</code> - The <strong>default export of your entry point</strong> will be assigned to the library target:</p>
+<pre><code class="lang-javascript"><span class="token comment" spellcheck="true">// if your entry has a default export of `MyDefaultModule`</span>
+<span class="token keyword">var</span> MyDefaultModule <span class="token operator">=</span> _entry_return_<span class="token punctuation">.</span><span class="token keyword">default</span><span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// your users will use your library like:</span>
+MyDefaultModule<span class="token punctuation">.</span><span class="token function">doSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p><code>libraryExport: &quot;MyModule&quot;</code> - The <strong>specified module</strong> will be assigned to the library target:</p>
+<pre><code class="lang-javascript"><span class="token comment" spellcheck="true">// if your entry exports a module `MyModule`</span>
+<span class="token keyword">var</span> MyModule <span class="token operator">=</span> _entry_return_<span class="token punctuation">.</span>MyModule<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// your users will use your library like:</span>
+MyModule<span class="token punctuation">.</span><span class="token function">doSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
+<p><code>libraryExport: [&quot;MyModule&quot;, &quot;MySubModule&quot;]</code> - The array is interpreted as a <strong>path to a module</strong> to be assigned to the library target:</p>
+<pre><code class="lang-javascript"><span class="token comment" spellcheck="true">// if your entry exports `MyModule` which in turn exports `MySubModule`</span>
+<span class="token keyword">var</span> MySubModule <span class="token operator">=</span> _entry_return_<span class="token punctuation">.</span>MyModule<span class="token punctuation">.</span>MySubModule<span class="token punctuation">;</span>
+
+MySubModule<span class="token punctuation">.</span><span class="token function">doSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre>
 <h2 class="header"><a class="anchor" href="#output-librarytarget" id="output-librarytarget"></a><span class="text"><code>output.libraryTarget</code></span><a class="icon-link" href="#output-librarytarget"></a></h2>
 <p><code>string</code></p>
 <blockquote>
